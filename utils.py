@@ -2,8 +2,7 @@ import numpy as np
 from scipy.io import savemat
 import os
 import json
-import tensorflow as tf
-
+import tensorflow.compat.v1 as tf; tf.disable_v2_behavior()
 
 class Logger(object):
     def __init__(self, log_dir):
@@ -38,7 +37,11 @@ class Logger(object):
         record_dict = dict()
         for key, value in self.buffer.items():
             if len(self.buffer[key]) > 0:
-                record_dict[key] = np.mean(value)  # Log average value (can also log max, min, or std)
+                val = np.mean(np.array(value, dtype=object))  # Log average value (can also log max, min, or std)
+                try:
+                    record_dict[key] = val[0]
+                except Exception:
+                    record_dict[key] = val
                 self.buffer[key] = []
             else:  # When the epoch idx add nothing to the buffer and there is a previous value in log
                 record_dict[key] = self.get(key)  # get the most recent value
