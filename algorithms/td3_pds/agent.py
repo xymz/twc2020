@@ -1,4 +1,4 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf; tf.disable_v2_behavior()
 from algorithms.common.layers import mlp, pds_func, reward_func, safety_layer
 from algorithms.td3.agent import TD3Agent
 from algorithms.ddpg_pds.agent import PDSDDPGAgent

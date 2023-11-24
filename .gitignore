@@ -1,0 +1,6 @@
+__pycache__
+.idea
+checkpoint
+experiments
+*.swp
+*.swo
